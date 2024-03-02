@@ -1,11 +1,17 @@
 // backend/db.js
 const mongoose = require('mongoose');
+console.log(process.env.DB_URI);
+module.exports = connectDatabase = ()=>{
 
-mongoose.connect("mongodb://localhost:27018,localhost:27019,localhost:27020/paytm?replicaSet=noob").then(()=>{
-    console.log("connected")
-}).catch((err)=>{
-    console.log(err.message);
-})
+    mongoose.connect(process.env.DB_URI).then(()=>{
+        console.log("connected")
+    }).catch((err)=>{
+        console.log(err.message);
+    })
+
+}
+
+
 
 // Create a Schema for Users
 const userSchema = new mongoose.Schema({
@@ -54,5 +60,6 @@ const User = mongoose.model('User', userSchema);
 
 module.exports = {
 	User,
-    Account
+    Account,
+    connectDatabase
 };

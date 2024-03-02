@@ -1,3 +1,5 @@
+const dotenv = require("dotenv")
+dotenv.config();
 // backend/index.js
 const express = require('express');
 const cors = require("cors");
@@ -6,7 +8,12 @@ const { User, Account } = require('./db');
 const  jwt  = require('jsonwebtoken');
 const { JWT_SECRET } = require('./config');
 
+const {connectDatabase} = require('./db');
+
+
 const app = express();
+
+connectDatabase();
 
 app.use(cors());
 app.use(express.json());
@@ -43,4 +50,6 @@ app.post("/api/v1/user/kaun" ,async(req,res)=>{
 
 })
 
-app.listen(4000);
+app.listen(process.env.PORT,()=>{
+  console.log(`we are listening at ${process.env.PORT}`)
+});
